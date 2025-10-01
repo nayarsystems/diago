@@ -11,10 +11,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/emiago/diago"
-	"github.com/emiago/diago/examples"
 	"github.com/emiago/sipgo"
 	"github.com/emiago/sipgo/sip"
+	"github.com/nayarsystems/diago"
+	"github.com/nayarsystems/diago/examples"
 )
 
 // Run app:

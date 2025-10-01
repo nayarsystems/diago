@@ -9,8 +9,8 @@ import (
 	"path"
 	"time"
 
-	"github.com/emiago/diago/media"
 	"github.com/google/uuid"
+	"github.com/nayarsystems/diago/media"
 )
 
 var (

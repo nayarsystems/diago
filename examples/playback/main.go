@@ -9,10 +9,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/emiago/diago"
-	"github.com/emiago/diago/examples"
-	"github.com/emiago/diago/testdata"
 	"github.com/emiago/sipgo"
+	"github.com/nayarsystems/diago"
+	"github.com/nayarsystems/diago/examples"
+	"github.com/nayarsystems/diago/testdata"
 )
 
 // Dial this app with

@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/emiago/diago/media/sdp"
+	"github.com/nayarsystems/diago/media/sdp"
 	"github.com/pion/rtcp"
 	"github.com/pion/rtp"
 )

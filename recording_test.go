@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/emiago/diago/audio"
-	"github.com/emiago/diago/media"
+	"github.com/nayarsystems/diago/audio"
+	"github.com/nayarsystems/diago/media"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

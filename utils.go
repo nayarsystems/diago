@@ -11,7 +11,7 @@ import (
 	"net/http/httputil"
 	"sync"
 
-	"github.com/emiago/diago/media"
+	"github.com/nayarsystems/diago/media"
 	"github.com/pion/rtp"
 )
 
