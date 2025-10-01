@@ -774,9 +774,14 @@ func generateSDPForAudio(originIP net.IP, connectionIP net.IP, rtpPort int, mode
 			formatsMap = append(formatsMap, "a=rtpmap:8 PCMA/8000")
 		case CodecAudioOpus.PayloadType:
 			formatsMap = append(formatsMap, "a=rtpmap:96 opus/48000/2")
-			// Providing 0 when FEC cannot be used on the receiving side is RECOMMENDED.
-			// https://datatracker.ietf.org/doc/html/rfc7587
-			formatsMap = append(formatsMap, "a=fmtp:96 useinbandfec=0")
+			// Use custom Fmtp if configured, otherwise use default
+			if f.Fmtp != "" {
+				formatsMap = append(formatsMap, fmt.Sprintf("a=fmtp:96 %s", f.Fmtp))
+			} else {
+				// Providing 0 when FEC cannot be used on the receiving side is RECOMMENDED.
+				// https://datatracker.ietf.org/doc/html/rfc7587
+				formatsMap = append(formatsMap, "a=fmtp:96 useinbandfec=0")
+			}
 		case CodecTelephoneEvent8000.PayloadType:
 			formatsMap = append(formatsMap, "a=rtpmap:101 telephone-event/8000")
 			formatsMap = append(formatsMap, "a=fmtp:101 0-16")

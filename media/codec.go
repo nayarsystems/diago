@@ -27,7 +27,8 @@ type Codec struct {
 	PayloadType uint8
 	SampleRate  uint32
 	SampleDur   time.Duration
-	NumChannels int // 1 or 2
+	NumChannels int    // 1 or 2
+	Fmtp        string // Optional format parameters for SDP (e.g., "maxaveragebitrate=8000; maxbandwidth=NB")
 }
 
 func (c *Codec) String() string {
