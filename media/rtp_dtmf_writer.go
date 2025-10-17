@@ -52,11 +52,17 @@ func (w *RTPDtmfWriter) writeDTMF(dtmf rune) error {
 	// DTMF events are send directly to packet writer as they are different Codec
 	packetWriter := w.packetWriter
 
-	if w.codec.SampleRate != 8000 {
-		return fmt.Errorf("Only 8000Hz is supported")
+	// Select appropriate encoder based on sample rate
+	var evs []DTMFEvent
+	switch w.codec.SampleRate {
+	case 8000:
+		evs = RTPDTMFEncode8000(dtmf)
+	case 48000:
+		evs = RTPDTMFEncode48000(dtmf)
+	default:
+		return fmt.Errorf("unsupported sample rate for DTMF: %d Hz (supported: 8000, 48000)", w.codec.SampleRate)
 	}
 
-	evs := RTPDTMFEncode8000(dtmf)
 	ticker := time.NewTicker(w.codec.SampleDur)
 	defer ticker.Stop()
 	for i, e := range evs {

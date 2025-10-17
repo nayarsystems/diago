@@ -82,6 +82,40 @@ func RTPDTMFEncode8000(char rune) []DTMFEvent {
 	return events
 }
 
+// RTPDTMFEncode48000 creates series of DTMF redundant events for 48kHz sample rate
+// Used with Opus codec which typically runs at 48kHz
+// Duration values are 6x larger than 8kHz (48000/8000 = 6)
+func RTPDTMFEncode48000(char rune) []DTMFEvent {
+	event := dtmfEventMapping[char]
+
+	events := make([]DTMFEvent, 7)
+
+	// Continuation events
+	// At 48kHz: 960 samples = 20ms (same duration as 160 samples at 8kHz)
+	for i := 0; i < 4; i++ {
+		d := DTMFEvent{
+			Event:      event,
+			EndOfEvent: false,
+			Volume:     10,
+			Duration:   960 * (uint16(i) + 1), // 960 = 160 * 6
+		}
+		events[i] = d
+	}
+
+	// End events with redundancy
+	for i := 4; i < 7; i++ {
+		d := DTMFEvent{
+			Event:      event,
+			EndOfEvent: true,
+			Volume:     10,
+			Duration:   960 * 5, // Must not be increased for end event
+		}
+		events[i] = d
+	}
+
+	return events
+}
+
 // DTMFEvent represents a DTMF event
 type DTMFEvent struct {
 	Event      uint8
