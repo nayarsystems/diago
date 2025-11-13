@@ -85,9 +85,8 @@ func NewRTPPacketWriterSession(sess *RTPSession) *RTPPacketWriter {
 	codec := CodecAudioFromSession(sess.Sess)
 	w := NewRTPPacketWriter(sess, codec)
 	// We need to add our SSRC due to sender report, which can be empty until data comes
-	// It is expected that nothing travels yet through rtp session
-	// sess.writeStats.SSRC = w.SSRC
-	// sess.writeStats.sampleRate = w.sampleRate
+	sess.writeStats.SSRC = w.SSRC
+	sess.writeStats.sampleRate = w.sampleRate
 	w.writer = sess
 	return w
 }

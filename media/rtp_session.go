@@ -454,8 +454,11 @@ func (s *RTPSession) readRTCPPacket(pkt rtcp.Packet) {
 
 func (s *RTPSession) readReceptionReport(rr rtcp.ReceptionReport, now time.Time) {
 	// For now only use single SSRC
+	// Note: In practice, we may send multiple SSRCs (e.g., audio + DTMF), so we accept
+	// reception reports for any SSRC and only process stats for our primary writeStats.SSRC
 	if rr.SSRC != s.writeStats.SSRC {
-		DefaultLogger().Warn("Reception report SSRC does not match our internal", "ssrc", rr.SSRC, "expected", s.writeStats.SSRC)
+		// This is not an error - peer is reporting on a different SSRC we're sending (e.g., DTMF)
+		DefaultLogger().Debug("Reception report for non-primary SSRC", "ssrc", rr.SSRC, "primary", s.writeStats.SSRC)
 		return
 	}
 
